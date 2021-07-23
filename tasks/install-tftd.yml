@@ -1,0 +1,36 @@
+---
+- name: Install tftpd 4 any Linux distros
+  when: ansible_system == 'Linux'
+  become: yes
+  package:
+    name:
+      - "{{ tftpd_service_name_fact }}"
+    state: present
+
+- name: Create directory structure
+  when: ansible_system == 'Linux'
+  become: yes
+  file:
+    path: '{{ tftpd_directory }}'
+    state: directory
+    owner: '{{ tftpd_user }}'
+    group: '{{ tftpd_group }}'
+    mode: '{{ tftpd_chmod }}'
+  notify: restart-tftpd
+
+- name: Enable and start "tftpd" service 4 any Linux distros
+  when: ansible_system == 'Linux'
+  become: yes
+  service:
+    name: "{{ tftpd_service_name_fact }}"
+    state: started
+    enabled: yes
+
+# TODO. Need UPD support.
+# - name: Ensure port is open
+#   when: ansible_system == 'Linux'
+#   become: yes
+#   wait_for:
+#     port: '{{ tftpd_port }}'
+#     host: "{{ inventory_hostname }}"
+#     state: started

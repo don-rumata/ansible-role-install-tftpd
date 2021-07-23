@@ -1,0 +1,21 @@
+---
+- set_fact:
+    tftpd_package_name_fact: tftpd-hpa
+    tftpd_service_name_fact: tftpd-hpa.service
+    tftpd_path_to_config_fact: /etc/default/tftpd-hpa
+  when:
+    - ansible_os_family == 'Debian'
+    - ansible_pkg_mgr == 'apt'
+
+- set_fact:
+    tftpd_package_name_fact: tftp-server
+    tftpd_service_name_fact: tftp.service
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_pkg_mgr == 'dnf'
+
+- set_fact:
+    asdasda: asdasda
+  when:
+    - ansible_os_family == 'Suse'
+    - ansible_pkg_mgr == 'zypper'

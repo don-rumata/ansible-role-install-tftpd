@@ -1,2 +1,9 @@
 ---
-# defaults file for ansible-role-install-tftpd
+tftpd_directory: /var/lib/tftpboot
+tftpd_user: tftp
+tftpd_group: tftp
+tftpd_chmod: u+rw,g+rw,o+rx
+
+tftpd_address: 0.0.0.0
+tftpd_port: 69
+tftpd_options: --secure -c -R 30000:32000 -s -v -v -v

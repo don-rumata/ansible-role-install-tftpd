@@ -1,2 +1,9 @@
 ---
-# tasks file for ansible-role-install-tftpd
+- include_tasks: update-cache.yml
+  when: ansible_virtualization_type == 'docker'
+
+- include_tasks: create-user-and-group.yml
+
+- include_tasks: install-tftd.yml
+
+- include_tasks: config-tftpd.yml
