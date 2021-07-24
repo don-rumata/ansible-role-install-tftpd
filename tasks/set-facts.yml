@@ -17,7 +17,9 @@
     - ansible_pkg_mgr == 'dnf'
 
 - set_fact:
-    asdasda: asdasda
+    tftpd_package_name_fact: tftp
+    tftpd_service_name_fact: tftp.service
+    tftpd_path_to_config_fact: /etc/sysconfig/tftp
   when:
     - ansible_os_family == 'Suse'
     - ansible_pkg_mgr == 'zypper'
