@@ -1,0 +1,113 @@
+---
+# https://askubuntu.com/a/659268
+# https://valynkin.ru/shpargalka-po-systemd-systemctl.html
+- name: Create dir 4 systemd service custom setting
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_pkg_mgr == 'dnf'
+  become: yes
+  file:
+    path: "{{ tftpd_path_to_config_fact | dirname }}"
+    state: directory
+
+# - name: Config option "ExecStart" in systemd unit
+#   when:
+#     - ansible_os_family == 'RedHat'
+#     - ansible_pkg_mgr == 'dnf'
+#   become: yes
+#   ini_file:
+#     path: '{{ tftpd_path_to_config_fact }}'
+#     section: Service
+#     option: ExecStart
+#     value:
+#       /usr/sbin/in.tftpd
+#       --address {{ tftpd_address }}:{{ tftpd_port }} {{ tftpd_options }}
+#       -s {{ tftpd_directory }}
+#     no_extra_spaces: yes
+#     state: present
+#     backup: yes
+#   register: tftpd_config_execstart_state
+#   notify:
+#     # - reload-tftpd
+#     - restart-tftpd
+
+# - name: Config option "user"
+#   when:
+#     - ansible_os_family == 'RedHat'
+#     - ansible_pkg_mgr == 'dnf'
+#   become: yes
+#   ini_file:
+#     path: '{{ tftpd_path_to_config_fact }}'
+#     section: Service
+#     option: User
+#     value: '{{ tftpd_user }}'
+#     no_extra_spaces: yes
+#     state: present
+#     backup: yes
+#   register: tftpd_config_user_state
+#   notify:
+#     # - reload-tftpd
+#     - restart-tftpd
+
+# - name: Config option "group"
+#   when:
+#     - ansible_os_family == 'RedHat'
+#     - ansible_pkg_mgr == 'dnf'
+#   become: yes
+#   ini_file:
+#     path: '{{ tftpd_path_to_config_fact }}'
+#     section: Service
+#     option: Group
+#     value: '{{ tftpd_group }}'
+#     no_extra_spaces: yes
+#     state: present
+#     backup: yes
+#   register: tftpd_config_group_state
+#   notify:
+#     # - reload-tftpd
+#     - restart-tftpd
+
+- name: Override default systemd unit
+  when:
+    - ansible_os_family == 'RedHat'
+    - ansible_pkg_mgr == 'dnf'
+  become: yes
+  copy:
+    dest: '{{ tftpd_path_to_config_fact }}'
+    content: |
+      [Unit]
+      Description=Tftp Server
+      Requires=tftp.socket
+      Documentation=man:in.tftpd
+
+      [Service]
+      # https://unix.stackexchange.com/a/500267
+      ExecStart=
+      ExecStart=/usr/sbin/in.tftpd --address {{ tftpd_address }}:{{ tftpd_port }} {{ tftpd_options }} -s {{ tftpd_directory }}
+      StandardInput=socket
+
+      User=tftp
+      Group=tftp
+
+      [Install]
+      Also=tftp.socket
+      # https://unix.stackexchange.com/a/251225
+      # WantedBy=default.target
+      WantedBy=multi-user.target
+  register: tftp_config_full_override
+
+# Не notify, потому что handler выполняется последним и смена конфига приводит к запрету запуска при загрузке.
+- name: Reload systemd when unit file was changed
+  when:
+    - ansible_system == 'Linux'
+    # - tftpd_config_execstart_state.changed == true
+    # - tftpd_config_execstart_state.changed
+    #   or
+    #   tftpd_config_user_state.changed
+    #   or
+    #   tftpd_config_group_state.changed
+    - tftp_config_full_override.changed
+  become: yes
+  systemd:
+    name: "{{ tftpd_service_name_fact }}"
+    daemon_reload: yes

@@ -4,7 +4,7 @@
   become: yes
   package:
     name:
-      - "{{ tftpd_service_name_fact }}"
+      - "{{ tftpd_package_name_fact }}"
     state: present
 
 - name: Create directory structure
@@ -17,14 +17,6 @@
     group: '{{ tftpd_group }}'
     mode: '{{ tftpd_chmod }}'
   notify: restart-tftpd
-
-- name: Enable and start "tftpd" service 4 any Linux distros
-  when: ansible_system == 'Linux'
-  become: yes
-  service:
-    name: "{{ tftpd_service_name_fact }}"
-    state: started
-    enabled: yes
 
 # TODO. Need UPD support.
 # - name: Ensure port is open

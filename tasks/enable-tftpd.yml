@@ -1,0 +1,8 @@
+---
+- name: Enable and start "tftpd" service 4 any Linux distros
+  when: ansible_system == 'Linux'
+  become: yes
+  service:
+    name: "{{ tftpd_service_name_fact }}"
+    state: started
+    enabled: yes

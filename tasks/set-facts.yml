@@ -10,6 +10,8 @@
 - set_fact:
     tftpd_package_name_fact: tftp-server
     tftpd_service_name_fact: tftp.service
+    # /usr/lib/systemd/system/tftp.service
+    tftpd_path_to_config_fact: /etc/systemd/system/tftp.service.d/override.conf
   when:
     - ansible_os_family == 'RedHat'
     - ansible_pkg_mgr == 'dnf'

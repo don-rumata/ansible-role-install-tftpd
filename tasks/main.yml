@@ -2,8 +2,12 @@
 - include_tasks: update-cache.yml
   when: ansible_virtualization_type == 'docker'
 
+- include_tasks: set-facts.yml
+
 - include_tasks: create-user-and-group.yml
 
-- include_tasks: install-tftd.yml
+- include_tasks: install-tftpd.yml
 
-- include_tasks: config-tftpd.yml
+- include_tasks: config-tftpd-{{ ansible_os_family | lower }}.yml
+
+- include_tasks: enable-tftpd.yml

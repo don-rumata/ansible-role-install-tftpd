@@ -1,7 +1,8 @@
 ---
 - name: Config option "user"
   when:
-    - ansible_system == 'Linux'
+    - ansible_os_family == 'Debian'
+    - ansible_pkg_mgr == 'apt'
   become: yes
   ini_file:
     path: '{{ tftpd_path_to_config_fact }}'
@@ -9,12 +10,14 @@
     option: TFTP_USERNAME
     value: '"{{ tftpd_user }}"'
     no_extra_spaces: yes
+    state: present
     backup: yes
   notify: restart-tftpd
 
 - name: Config option "directory"
   when:
-    - ansible_system == 'Linux'
+    - ansible_os_family == 'Debian'
+    - ansible_pkg_mgr == 'apt'
   become: yes
   ini_file:
     path: '{{ tftpd_path_to_config_fact }}'
@@ -22,12 +25,14 @@
     option: TFTP_DIRECTORY
     value: '"{{ tftpd_directory }}"'
     no_extra_spaces: yes
+    state: present
     backup: yes
   notify: restart-tftpd
 
 - name: Config option "address"
   when:
-    - ansible_system == 'Linux'
+    - ansible_os_family == 'Debian'
+    - ansible_pkg_mgr == 'apt'
   become: yes
   ini_file:
     path: '{{ tftpd_path_to_config_fact }}'
@@ -35,12 +40,14 @@
     option: TFTP_ADDRESS
     value: '"{{ tftpd_address }}:{{ tftpd_port }}"'
     no_extra_spaces: yes
+    state: present
     backup: yes
   notify: restart-tftpd
 
 - name: Config option "options"
   when:
-    - ansible_system == 'Linux'
+    - ansible_os_family == 'Debian'
+    - ansible_pkg_mgr == 'apt'
   become: yes
   ini_file:
     path: '{{ tftpd_path_to_config_fact }}'
@@ -48,5 +55,6 @@
     option: TFTP_OPTIONS
     value: '"{{ tftpd_options }}"'
     no_extra_spaces: yes
+    state: present
     backup: yes
   notify: restart-tftpd
