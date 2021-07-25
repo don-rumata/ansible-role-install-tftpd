@@ -7,4 +7,4 @@ tftpd_chmod: u+rw,g+rw,o+rx
 tftpd_address: 0.0.0.0
 tftpd_port: 69
 # TODO. Нужен или нет ключ "-c"?
-tftpd_options: --secure -R 30000:32000 -s -v -v -v
+tftpd_options: --port-range 30000:32000 --verbose --verbose --verbose --secure
