@@ -9,4 +9,3 @@
 - include_tasks: install-tftpd.yml
 
 - include_tasks: config-tftpd-{{ ansible_os_family | lower }}.yml
-

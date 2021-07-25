@@ -136,4 +136,4 @@ Apache License, Version 2.0
 [ansible-galaxy-image]: https://img.shields.io/badge/ansible_galaxy-don__rumata.ansible__role__install__tftpd-blue.svg
 [ansible-galaxy-url]: https://galaxy.ansible.com/don_rumata/ansible_role_install_tftpd
 
-[ansible-galaxy-quality-image]: https://img.shields.io/ansible/quality/55672
+[ansible-galaxy-quality-image]: https://img.shields.io/ansible/quality/55766

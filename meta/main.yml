@@ -35,7 +35,8 @@ galaxy_info:
   galaxy_tags:
     - tftp
     - tftpd
-    - tftpd-hpa
+    - tftpdhpa
+    - tftphpa
     - linux
     - ubuntu
     - debian
