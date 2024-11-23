@@ -5,7 +5,7 @@
   when:
     - ansible_os_family == 'RedHat'
     - ansible_pkg_mgr == 'dnf'
-  become: yes
+  become: true
   file:
     path: "{{ tftpd_path_to_config_fact | dirname }}"
     state: directory
@@ -14,7 +14,7 @@
   when:
     - ansible_os_family == 'RedHat'
     - ansible_pkg_mgr == 'dnf'
-  become: yes
+  become: true
   copy:
     dest: '{{ tftpd_path_to_config_fact }}'
     content: |
@@ -39,7 +39,7 @@
     - ansible_system == 'Linux'
     # - tftp_config_full_override.changed == true
     - tftp_config_full_override.changed
-  become: yes
+  become: true
   systemd:
     name: "{{ tftpd_service_name_fact }}"
-    daemon_reload: yes
+    daemon_reload: true

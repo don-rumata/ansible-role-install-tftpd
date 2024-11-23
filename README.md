@@ -129,6 +129,7 @@ Apache License, Version 2.0
 ## TODO
 
 - Add tests.
+- Add rule 4 firewalld (https://gist.github.com/shamil/d2fb2bfa92b769c17df84706904d9ee7).
 
 ## Known issue
 

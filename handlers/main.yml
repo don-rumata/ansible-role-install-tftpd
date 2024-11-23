@@ -1,14 +1,14 @@
 ---
 - name: restart-tftpd
   when: ansible_system == 'Linux'
-  become: yes
+  become: true
   service:
     name: "{{ tftpd_service_name_fact }}"
     state: restarted
 
 # - name: reload-tftpd
 #   when: ansible_system == 'Linux'
-#   become: yes
+#   become: true
 #   systemd:
 #     name: "{{ tftpd_service_name_fact }}"
-#     daemon_reload: yes
+#     daemon_reload: true

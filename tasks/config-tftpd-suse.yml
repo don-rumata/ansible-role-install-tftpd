@@ -3,43 +3,43 @@
   when:
     - ansible_os_family == 'Suse'
     - ansible_pkg_mgr == 'zypper'
-  become: yes
+  become: true
   ini_file:
     path: '{{ tftpd_path_to_config_fact }}'
     section: null
     option: TFTP_USER
     value: '"{{ tftpd_user }}"'
-    no_extra_spaces: yes
+    no_extra_spaces: true
     state: present
-    backup: yes
+    backup: true
   notify: restart-tftpd
 
 - name: Config option "directory"
   when:
     - ansible_os_family == 'Suse'
     - ansible_pkg_mgr == 'zypper'
-  become: yes
+  become: true
   ini_file:
     path: '{{ tftpd_path_to_config_fact }}'
     section: null
     option: TFTP_DIRECTORY
     value: '"{{ tftpd_directory }}"'
-    no_extra_spaces: yes
+    no_extra_spaces: true
     state: present
-    backup: yes
+    backup: true
   notify: restart-tftpd
 
 - name: Config option "options"
   when:
     - ansible_os_family == 'Suse'
     - ansible_pkg_mgr == 'zypper'
-  become: yes
+  become: true
   ini_file:
     path: '{{ tftpd_path_to_config_fact }}'
     section: null
     option: TFTP_OPTIONS
     value: '"{{ tftpd_options }}"'
-    no_extra_spaces: yes
+    no_extra_spaces: true
     state: present
-    backup: yes
+    backup: true
   notify: restart-tftpd

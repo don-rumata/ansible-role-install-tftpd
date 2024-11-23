@@ -1,20 +1,20 @@
 ---
 - name: Create tftpd group
   when: ansible_system == 'Linux'
-  become: yes
+  become: true
   group:
     name: '{{ tftpd_group }}'
-    system: yes
+    system: true
     state: present
 
 - name: Create tftpd user
   when: ansible_system == 'Linux'
-  become: yes
+  become: true
   user:
     name: '{{ tftpd_user }}'
     group: '{{ tftpd_group }}'
     home: '{{ tftpd_directory }}'
-    create_home: no
+    create_home: false
     shell: /usr/sbin/nologin
     state: present
-    system: yes
+    system: true
